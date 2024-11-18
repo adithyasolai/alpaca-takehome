@@ -6,23 +6,70 @@ import React, { useEffect, useState } from "react";
 function Home() {
   const [noteInputText, setNoteInputText] = useState('')
   const [submittedText, setSubmittedText] = useState<boolean>(false);
-  const [submittedSummary, setSubmittedSummary] = useState<boolean>(false);
+  const [summaryFetched, setSummaryFetched] = useState<boolean>(false);
+  const [summaryLoading, setSummaryLoading] = useState<boolean>(false);
+  const [summaryText, setSummaryText] = useState<string>("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNoteInputText(event.target.value)
   }
 
-  const handleNoteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleNoteSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
+
+      // convert API input to match the expected data model
+      const noteData = {
+        body: noteInputText
+      }
+
+      // Submit note to backend
+      try {
+        const response = await fetch("http://localhost:8000/note", {
+          method: "POST",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(noteData),
+        });
+
+        if (!response.ok) {
+          throw new Error('API response was not OK.')
+        }
+
+      } catch (error) {
+        console.error("Error submitting note: ", error)
+        // TODO: trigger some error message to user
+      }
+
       setSubmittedText(true);
       setNoteInputText('');
   };
 
-  const handleSummarySubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSummarySubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSubmittedSummary(true);
-  };
 
+    setSummaryLoading(true)
+    setSummaryFetched(false)
+
+    // fetch summary from backend, and update state
+    try {
+      const response = await fetch("http://localhost:8000/summary");
+
+      if (!response.ok) {
+        throw new Error('API response was not OK.')
+      }
+
+      const responseData = await response.json();
+      setSummaryText(responseData.generated_text)
+
+    } catch (error) {
+      console.error("Error submitting note: ", error)
+      // TODO: trigger some error message to user
+    }
+
+    setSummaryLoading(false);
+    setSummaryFetched(true);
+  };
 
   useEffect(() => {
     if (submittedText) {
@@ -73,9 +120,15 @@ function Home() {
           <button className="rounded-md bg-yellow-50 text-black p-1" type="submit">Summarize</button>
         </form>
 
-        {submittedSummary && (
+        {summaryLoading && (
           <div>
-              <h2 className="text-white">Summary Text Will Go Here...</h2>
+            <h2 className="text-white">loading...</h2>
+          </div>
+        )}
+
+        {summaryFetched && (
+          <div>
+            <h2 className="text-white">{summaryText}</h2>
           </div>
         )}
       </div>
