@@ -35,8 +35,8 @@ function Home() {
   }, [submittedText])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-8 text-center">
-      <h1 className="text-3xl font-bold">
+    <div className="flex flex-col items-center justify-center gap-6 p-6 text-center">
+      <h1 className="text-2xl font-bold">
         Welcome to the Alpaca Note Summarizing Platform
       </h1>
 
