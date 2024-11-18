@@ -1,9 +1,32 @@
 # Alpaca Health Software Engineering Take-Home Project
 
+_Candidate: Adithya Solai_
+
+
 ### Project Description
 
 Visit this link for details:
 [Project Description](./ProjectDescription.md)
+
+## My Project Scoping
+
+_Before starting to code._
+
+- First, get backend to just take in 1 sample note from an ABA and respond with a more professionally-written version of that note. Completely ignore frontend for now and just make GET/POST requests directly to server to test.
+- Then, implement a simple in-memory DB like sqlite to store all previous notes. Write a new POST API that simply allows users to log a note. No ChatGPT response is given/generated here. Then, write a separate GET API that will synthesize all existing notes as input and return a professionally-written summary of all notes in the input.
+  - I will ignore implementing user authentication for this project due to time constraints. It is also something I have implemented in my personal projects, so I know I can do it if given time (example project: https://apex-pies.com/).
+  - Still ignoring frontend at this point.
+- Finally start working on frontend. Make a box for users to just submit notes. Make a button at the bottom called "synthesize" or something that will actually return the AI summary.
+- Write some new APIs that allow users to also save AI-generated summaries to the DB, retrieve summaries, and then hand-edit them and re-save them.
+
+Stretch Goals:
+- user can input session parameters (duration, type, etc.) (tbh I don't have much industry context for what this means, but I can look into it if I have time)
+- Ability to retrieve and update original notes, and then re-synthesize to effectively try and meet the stretch goal of being able to refine/regenerate the summary.
+- Ability for user to modify the starting prompt given to the LLM to dictate the formatting/style of the output.
+  - This might be the quickest stretch goal to implement, so I might start here if there is time.
+- Improved style/CSS/UX
+
+
 
 ## Setup Instructions
 
