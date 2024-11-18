@@ -54,4 +54,3 @@ The application will be available at:
 - Backend runs on port 8000 with auto-reload enabled
 - API documentation available at http://localhost:8000/docs
 
-
