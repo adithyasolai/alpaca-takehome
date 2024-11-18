@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from pydantic import BaseModel
 
 # Load environment variables from .env file in the upper directory
 load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
@@ -44,8 +45,22 @@ system_instruction = "You are an assistant to an Applied Behavior Analysis thera
     clinical accuracy. Make sure to include the Date, Session Time, Therapist Name, and Patient Name at the top of the summary. \
     These details will be included in the notes."
 
-@app.get("/synthesize")
-async def synthesize():
+# define a data model for the input (simple for now, but this is more extensible in the future)
+class Note(BaseModel):
+    body: str
+
+
+@app.post("/note")
+async def synthesize(note: Note):
+    notes.append(note.body)
+
+    print(notes)
+
+    return {"message": "Note saved successfully!"}
+
+
+@app.get("/summary")
+async def summarize():
     # concatenate notes into a single input for API
     notes_input = " ".join(notes)
 
