@@ -25,6 +25,10 @@ app.add_middleware(
 
 # TODO: put this into a sqlite db and fetch it. this is for testing purposes only.
 notes = [
+    "Date: 11/18/24",
+    "Session Time: 8 PM - 9 PM EST",
+    "Therapist Name: Adithya Solai",
+    "Patient Name: John Abraham"
     "John arrived at the session calm and greeted the therapist with a smile.",
     "During the first activity (matching colors), John successfully matched 8 out of 10 colors with 80% accuracy.",
     "He required minimal prompts (2 verbal prompts) to complete the task.",
@@ -35,16 +39,22 @@ notes = [
     "For future session: Continue to use visual aids and consider introducing a timer to help John manage task completion."
 ]
 
+system_instruction = "You are an assistant to an Applied Behavior Analysis therapist that is supposed to take their notes. \
+    from a session with an autism patient and re-write the notes into a professional summary of the session while maintaining \
+    clinical accuracy. Make sure to include the Date, Session Time, Therapist Name, and Patient Name at the top of the summary. These details \
+    will be included in the notes."
+
 @app.get("/synthesize")
 async def synthesize():
     # concatenate notes into a single input for API
     notes_input = " ".join(notes)
-    openAI_input = f"Given this set of ABA notes with an autism patient, give a summary of the session, \
-        but make it sound more professional and maintain clinical accuracy by using terms from the industry: {notes_input}"
+
+    openAI_input = notes_input
 
     try:
         chat_completion = client.chat.completions.create(
             messages=[
+                {"role": "system", "content": system_instruction},
                 {
                     "role": "user",
                     "content": openAI_input,
