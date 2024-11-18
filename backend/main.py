@@ -1,5 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file in the upper directory
+load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 app = FastAPI()
 
@@ -14,4 +19,5 @@ app.add_middleware(
 
 @app.get("/")
 async def health_check():
-    return {"status": "healthy"}
+    output = os.environ['OPENAI_API_KEY']
+    return {"status": "healthy", "output": output}
