@@ -3,7 +3,7 @@
 ### Project Description
 
 Visit this link for details:
-[Project Description](./ProjectDescription.md)
+[https://harviio.notion.site/Alpaca-Health-Eng-Take-home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4](https://www.notion.so/harviio/ABA-Session-Note-Generator-Take-Home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4)
 
 ## Setup Instructions
 
@@ -54,4 +54,29 @@ The application will be available at:
 - Backend runs on port 8000 with auto-reload enabled
 - API documentation available at http://localhost:8000/docs
 
+## Requirements
 
+Implement the following features:
+[Your specific requirements here]
+
+## Submission
+
+1. Create a private GitHub repository
+2. Implement your solution
+3. Document any assumptions or trade-offs
+4. Include instructions for running your solution
+5. Send us the repository link
+
+## Time Expectation
+
+- Expected time: 3-4 hours
+- Please don't spend more than 6 hours
+
+## Evaluation Criteria
+
+- Code quality and organization
+- API design
+- Frontend implementation
+- Error handling
+- Documentation
+- Testing approach
