@@ -39,10 +39,10 @@ notes = [
     "For future session: Continue to use visual aids and consider introducing a timer to help John manage task completion."
 ]
 
-system_instruction = "You are an assistant to an Applied Behavior Analysis therapist that is supposed to take their notes. \
+system_instruction = "You are an assistant to an Applied Behavior Analysis therapist that is supposed to take their notes \
     from a session with an autism patient and re-write the notes into a professional summary of the session while maintaining \
-    clinical accuracy. Make sure to include the Date, Session Time, Therapist Name, and Patient Name at the top of the summary. These details \
-    will be included in the notes."
+    clinical accuracy. Make sure to include the Date, Session Time, Therapist Name, and Patient Name at the top of the summary. \
+    These details will be included in the notes."
 
 @app.get("/synthesize")
 async def synthesize():
