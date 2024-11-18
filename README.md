@@ -26,7 +26,11 @@ Stretch Goals:
   - This might be the quickest stretch goal to implement, so I might start here if there is time.
 - Improved style/CSS/UX
 
+## Some Caveats/Context
 
+- I don't know any NextJS, so I wrote the frontend as vanilla ReactJS with typing (and made it client-side rendering).
+- I didn't know TailwindCSS before this, but it was straight-forward to use its built-in classes after looking it up.
+- I haven't used OpenAI API much before, but it was pretty intuitive. I had an account and API key from earlier, so I wasn't slowed down too much.
 
 ## Setup Instructions
 

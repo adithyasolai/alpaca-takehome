@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 
 function Home() {
-  const [noteInputText, setNoteInputText] = useState('')
+  const [noteInputText, setNoteInputText] = useState<string>('')
   const [submittedText, setSubmittedText] = useState<boolean>(false);
   const [summaryFetched, setSummaryFetched] = useState<boolean>(false);
   const [summaryLoading, setSummaryLoading] = useState<boolean>(false);
