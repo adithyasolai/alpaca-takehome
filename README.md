@@ -10,7 +10,7 @@ Visit this link for details:
 
 ## My Project Scoping
 
-_Before starting to code._
+_I wrote this up before starting to code._
 
 - First, get backend to just take in 1 sample note from an ABA and respond with a more professionally-written version of that note. Completely ignore frontend for now and just make GET/POST requests directly to server to test.
 - Then, implement a simple in-memory DB like sqlite to store all previous notes. Write a new POST API that simply allows users to log a note. No ChatGPT response is given/generated here. Then, write a separate GET API that will synthesize all existing notes as input and return a professionally-written summary of all notes in the input.
