@@ -49,15 +49,13 @@ async def synthesize():
     # concatenate notes into a single input for API
     notes_input = " ".join(notes)
 
-    openAI_input = notes_input
-
     try:
         chat_completion = client.chat.completions.create(
             messages=[
                 {"role": "system", "content": system_instruction},
                 {
                     "role": "user",
-                    "content": openAI_input,
+                    "content": notes_input,
                 }
             ],
             model="gpt-4o-mini",
