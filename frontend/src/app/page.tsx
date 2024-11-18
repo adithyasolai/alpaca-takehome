@@ -1,28 +1,86 @@
-export default function Home() {
+// src/app/page.tsx
+"use client"; // I don't know NextJS at all, so just going to use vanilla ReactJS with typing.
+
+import React, { useEffect, useState } from "react";
+
+function Home() {
+  const [noteInputText, setNoteInputText] = useState('')
+  const [submittedText, setSubmittedText] = useState<boolean>(false);
+  const [submittedSummary, setSubmittedSummary] = useState<boolean>(false);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNoteInputText(event.target.value)
+  }
+
+  const handleNoteSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setSubmittedText(true);
+      setNoteInputText('');
+  };
+
+  const handleSummarySubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSubmittedSummary(true);
+  };
+
+
+  useEffect(() => {
+    if (submittedText) {
+      // set to false after 2 seconds to make the text pop-up go away
+      setTimeout(() => {
+        setSubmittedText(false)
+      }, 2000)
+    }
+    
+  }, [submittedText])
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 p-8 text-center">
       <h1 className="text-3xl font-bold">
-        Welcome to the Alpaca Health Platform Take-Home Project
+        Welcome to the Alpaca Note Summarizing Platform
       </h1>
 
-      <p className="max-w-lg text-lg">
-        This is your starting point. Please replace this page with your own
-        implementation following the project requirements.
-      </p>
+      <div>
+        <form onSubmit={handleNoteSubmit}>
+          <textarea
+            value={noteInputText}
+            className="text-black"
+            onChange={handleInputChange}
+            placeholder="Type your session note here..."
+            rows={5}
+            cols={50}
+            style={{
+              width: '80%'
+            }}
+          />
 
-      <div className="rounded-md bg-yellow-50 p-4 text-yellow-800">
-        <p className="text-sm">
-          Tip: Edit{" "}
-          <code className="rounded bg-yellow-100 px-1 py-0.5 font-mono">
-            src/app/page.tsx
-          </code>{" "}
-          to get started
-        </p>
+          <br/>
+
+          <button className="rounded-md bg-yellow-50 text-black p-1" type="submit">Submit</button>
+        </form>
+
+        {submittedText && (
+          <div>
+              <h2 className="text-white">Submitted Note!</h2>
+          </div>
+        )}
       </div>
 
-      <footer className="fixed bottom-4 text-sm text-gray-500">
-        <p>Good luck with your implementation!</p>
-      </footer>
+      <div>
+        <h1 className="text-xl font-bold">When ready, summarize notes below:</h1>
+
+        <form onSubmit={handleSummarySubmit}>
+          <button className="rounded-md bg-yellow-50 text-black p-1" type="submit">Summarize</button>
+        </form>
+
+        {submittedSummary && (
+          <div>
+              <h2 className="text-white">Summary Text Will Go Here...</h2>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
+
+export default Home;
