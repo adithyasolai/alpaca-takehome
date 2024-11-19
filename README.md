@@ -61,12 +61,15 @@ redis-server
 # modify the commands to make it work with Redis (because I installed Redis with Python3.10 on 
 # my macbook, but the Python Env was still defaulting to 3.9.6)
 
+# For simplicity, just do all of this in the /backend directory
+cd backend
+
 # Create and activate virtual environment
 python3.10 -m venv alpaca_venv
 source alpaca_venv/bin/activate
 
 # Install dependencies
-python3.10 -m pip install -r backend/requirements.txt
+python3.10 -m pip install -r requirements.txt
 
 # Start the server (uvicorn worked better for me)
 python3.10 -m pip install uvicorn
