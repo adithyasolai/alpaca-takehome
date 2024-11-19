@@ -32,7 +32,7 @@ system_instruction = "You are an assistant to an Applied Behavior Analysis thera
     clinical accuracy. Make sure to include the Date, Session Time, Therapist Name, and Patient Name at the top of the summary. \
     These details will be included in the notes."
 
-# define a data model for the input (simple for now, but this is more extensible in the future)
+# define a data model for the Note input (simple for now, but this is more extensible in the future)
 class Note(BaseModel):
     body: str
 
@@ -54,7 +54,33 @@ async def synthesize(note: Note):
 
     return {"message": "Note saved successfully!"}
 
+# define a data model for the Note input (simple for now, but this is more extensible in the future)
+class Summary(BaseModel):
+    body: str
 
+'''
+Saves given summary to user's data in Redis DB
+'''
+@app.post("/summary")
+async def saveSummary(summary: Summary):
+    # prepare to store in Redis db
+    userKey = f'user:{TEST_USER_ID}'
+    userSummariesKey = userKey + ":summaries"
+
+    # store in redis DB
+    r.rpush(userSummariesKey, summary.body)
+
+    # print list of summaries in Redis db right now
+    redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
+    redisSummaries = [note.decode('utf-8') for note in redisSummaries]
+    print("redis Summaries:", redisSummaries)
+
+    return {"message": "Note saved successfully!"}
+
+'''
+Gets all notes for the user from Redis DB, and then synthesizes a summary using
+the Open AI agent.
+'''
 @app.get("/summary")
 async def summarize():
     # get notes from Redis

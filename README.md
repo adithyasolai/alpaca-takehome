@@ -2,7 +2,6 @@
 
 _Candidate: Adithya Solai_
 
-
 ### Project Description
 
 Visit this link for details:
@@ -35,6 +34,32 @@ Stretch Goals:
 ## Setup Instructions
 
 ### Backend Setup (Python 3.11+ required)
+
+```bash
+# Setting up Redis Server
+# (Confirm that it does spin up in localhost Port 6379)
+
+redis-server
+
+```
+
+
+```bash
+# I noticed the Python 3.11+ too late, but my stuff still worked with Python 3.10, but I had to 
+# modify the commands to make it work with Redis (because I installed Redis with Python3.10 on 
+# my macbook, but the Python Env was still defaulting to 3.9.6)
+
+# Create and activate virtual environment
+python3.10 -m venv alpaca_venv
+source alpaca_venv/bin/activate
+
+# Install dependencies
+python3.10 -m pip install -r backend/requirements.txt
+
+# Start the server (uvicorn worked better for me)
+python3.10 -m pip install uvicorn
+python3.10 -m uvicorn main:app --reload
+```
 
 ```bash
 # Create and activate virtual environment
