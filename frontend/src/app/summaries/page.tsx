@@ -16,15 +16,14 @@ function Summaries() {
       const response = await fetch("http://localhost:8000/numSummaries");
 
       if (!response.ok) {
-        throw new Error('API response was not OK.')
+        throw new Error("API response was not OK.");
       }
 
       const responseData = await response.json();
 
-      setNumSummaries(responseData.num_summaries)
-
+      setNumSummaries(responseData.num_summaries);
     } catch (error) {
-      console.error("Error submitting note: ", error)
+      console.error("Error submitting note: ", error);
       // TODO: trigger some error message to user
     }
   };
@@ -32,10 +31,9 @@ function Summaries() {
   useEffect(() => {
     // fetch number of summaries for this user from backend
     (async () => {
-        await getNumSummaries()
+      await getNumSummaries();
     })();
-
-  }, [])
+  }, []);
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedNumber(Number(event.target.value));
@@ -46,18 +44,19 @@ function Summaries() {
 
     // fetch summary from backend, and update state
     try {
-      const response = await fetch(`http://localhost:8000/savedSummary?summary_num=${selectedNumber}`);
+      const response = await fetch(
+        `http://localhost:8000/savedSummary?summary_num=${selectedNumber}`,
+      );
 
       if (!response.ok) {
-        throw new Error('API response was not OK.')
+        throw new Error("API response was not OK.");
       }
 
       const responseData = await response.json();
-      setSummaryText(responseData.summary)
-      setSummaryFetched(true)
-
+      setSummaryText(responseData.summary);
+      setSummaryFetched(true);
     } catch (error) {
-      console.error("Error submitting note: ", error)
+      console.error("Error submitting note: ", error);
       // TODO: trigger some error message to user
     }
   };
@@ -67,13 +66,14 @@ function Summaries() {
 
   return (
     <div className="flex flex-col items-center justify-center gap-6 p-6 text-center">
-      <h1 className="text-2xl font-bold">
-        Welcome to the Summary Viewer
-      </h1>
+      <h1 className="text-2xl font-bold">Welcome to the Summary Viewer</h1>
 
       <p>Number of Summaries Available: {numSummaries}</p>
 
-      <form className="flex flex-col items-center gap-4" onSubmit={handleViewSummary}>
+      <form
+        className="flex flex-col items-center gap-4"
+        onSubmit={handleViewSummary}
+      >
         <label htmlFor="summarySelect" className="font-semibold">
           Select a summary number:
         </label>
@@ -90,8 +90,8 @@ function Summaries() {
             </option>
           ))}
         </select>
-        <button 
-          type="submit" 
+        <button
+          type="submit"
           className="rounded-md bg-blue-500 text-white p-2 hover:bg-blue-600 transition-colors"
         >
           View Summary
@@ -102,15 +102,11 @@ function Summaries() {
         <div>
           <h2 className="text-white">{summaryText}</h2>
         </div>
-      )
-      }
+      )}
 
       <Link href="/">
-          <button className="rounded-md bg-yellow-50 text-black p-1">
-          Home
-          </button>
+        <button className="rounded-md bg-yellow-50 text-black p-1">Home</button>
       </Link>
-
     </div>
   );
 }
