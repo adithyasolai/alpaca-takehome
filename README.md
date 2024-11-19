@@ -4,8 +4,12 @@ _Candidate: Adithya Solai_
 
 ### Project Description
 
-Visit this link for details:
+Visit this link:
 [Project Description](./ProjectDescription.md)
+
+### API Documentation
+
+Visit this link: [API Documentation](./api-documentation.md)
 
 ## My Project Scoping
 
@@ -25,15 +29,24 @@ Stretch Goals:
   - This might be the quickest stretch goal to implement, so I might start here if there is time.
 - Improved style/CSS/UX
 
+# Results
+
+I ended up achieving all of my non-stretch-goal goals from my Project Scoping above.
+
+I kind of also implemented the session parameters stretch goal using the AI agent prompt. I made the AI agent format the summary in a way that has time, patient name, therapist name, etc in the header of the summary write-up, and told it to expect that in the notes. One clunky downside is that the AI agent sometimes does not give a proper summary and asks for the user to input those header fields (duration, patient name, etc.), but maybe this is a feature and not a bug?
+
 ## Some Caveats/Context
 
-- I don't know any NextJS, so I wrote the frontend as vanilla ReactJS with typing (and made it client-side rendering).
+- I don't know any NextJS, so I wrote the frontend as vanilla ReactJS (and made it client-side rendering) and tried my best with typing (not super comfortable with Typescript yet either).
 - I didn't know TailwindCSS before this, but it was straight-forward to use its built-in classes after looking it up.
 - I haven't used OpenAI API much before, but it was pretty intuitive. I had an account and API key from earlier, so I wasn't slowed down too much.
+- I haven't worked with Redis before, but I knew what it was conceptually. I figured a NoSQL store like Redis makes more sense for unstructured data like this than a relational DB like sqlite. But I chose Redis because it is in-memory and fast to get set up.
 
 ## Setup Instructions
 
 ### Backend Setup (Python 3.11+ required)
+
+Adithya's Setup:
 
 ```bash
 # Setting up Redis Server
@@ -42,7 +55,6 @@ Stretch Goals:
 redis-server
 
 ```
-
 
 ```bash
 # I noticed the Python 3.11+ too late, but my stuff still worked with Python 3.10, but I had to 
@@ -59,21 +71,6 @@ python3.10 -m pip install -r backend/requirements.txt
 # Start the server (uvicorn worked better for me)
 python3.10 -m pip install uvicorn
 python3.10 -m uvicorn main:app --reload
-```
-
-```bash
-# Create and activate virtual environment
-python -m venv alpaca_venv
-source alpaca_venv/bin/activate  # or `venv\Scripts\activate` on Windows
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Start the server
-fastapi dev main.py
-
-# worked better for me (Adithya Solai)
-uvicorn main:app --reload
 ```
 
 ### Frontend Setup (Node.js 18+ required)
@@ -93,20 +90,10 @@ The application will be available at:
 
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
-
-## Default Project Structure
-
-- `frontend/`: Next.js application
-  - `src/components/`: Reusable React components
-  - `src/app/`: Next.js app router pages
-- `backend/`: FastAPI application
-  - `app/main.py`: API endpoints
 
 ## Development
 
 - Frontend runs on port 3000 with hot reload enabled
 - Backend runs on port 8000 with auto-reload enabled
-- API documentation available at http://localhost:8000/docs
 - Update backend dependencies: `pipreqs --force`
 

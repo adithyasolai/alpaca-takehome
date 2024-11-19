@@ -38,19 +38,18 @@ class Note(BaseModel):
 
 TEST_USER_ID = 1000
 
+'''
+Saves given note to user's data in the Redis DB to be
+used later by the Open AI agent to generate a summary.
+'''
 @app.post("/note")
-async def synthesize(note: Note):
+async def saveNote(note: Note):
     # prepare to store in Redis db
     userKey = f'user:{TEST_USER_ID}'
     userNotesKey = userKey + ":notes"
 
     # store in redis DB
     r.rpush(userNotesKey, note.body)
-
-    # print list of notes in Redis db right now
-    redisNotes = r.lrange(userNotesKey, 0, -1)  # Get all notes from the list
-    redisNotes = [note.decode('utf-8') for note in redisNotes]
-    print("redisNotes:", redisNotes)
 
     return {"message": "Note saved successfully!"}
 
@@ -70,12 +69,7 @@ async def saveSummary(summary: Summary):
     # store in redis DB
     r.rpush(userSummariesKey, summary.body)
 
-    # print list of summaries in Redis db right now
-    redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
-    redisSummaries = [note.decode('utf-8') for note in redisSummaries]
-    print("redis Summaries:", redisSummaries)
-
-    return {"message": "Note saved successfully!"}
+    return {"message": "Summary saved successfully!"}
 
 '''
 Gets Number of Summaries for this user
@@ -86,7 +80,7 @@ async def numSummaries():
     userKey = f'user:{TEST_USER_ID}'
     userSummariesKey = userKey + ":summaries"
 
-    # print list of summaries in Redis db right now
+    # get list of summaries in Redis db right now
     redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
     redisSummaries = [note.decode('utf-8') for note in redisSummaries]
 
@@ -101,7 +95,7 @@ async def getSavedSummary(summary_num: int = Query(default=1)):
     userKey = f'user:{TEST_USER_ID}'
     userSummariesKey = userKey + ":summaries"
 
-    # print list of summaries in Redis db right now
+    # get list of summaries in Redis db right now
     redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
     redisSummaries = [note.decode('utf-8') for note in redisSummaries]
 
