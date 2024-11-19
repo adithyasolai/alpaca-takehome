@@ -35,12 +35,28 @@ I ended up achieving all of my non-stretch-goal goals from my Project Scoping ab
 
 I kind of also implemented the session parameters stretch goal using the AI agent prompt. I made the AI agent format the summary in a way that has time, patient name, therapist name, etc in the header of the summary write-up, and told it to expect that in the notes. One clunky downside is that the AI agent sometimes does not give a proper summary and asks for the user to input those header fields (duration, patient name, etc.), but maybe this is a feature and not a bug?
 
-## Some Caveats/Context
+## Some Caveats/Context (Challenges)
 
 - I don't know any NextJS, so I wrote the frontend as vanilla ReactJS (and made it client-side rendering) and tried my best with typing (not super comfortable with Typescript yet either).
 - I didn't know TailwindCSS before this, but it was straight-forward to use its built-in classes after looking it up.
 - I haven't used OpenAI API much before, but it was pretty intuitive. I had an account and API key from earlier, so I wasn't slowed down too much.
 - I haven't worked with Redis before, but I knew what it was conceptually. I figured a NoSQL store like Redis makes more sense for unstructured data like this than a relational DB like sqlite. But I chose Redis because it is in-memory and fast to get set up.
+
+# Approach & Design Decisions & Challenges
+
+- (Approach) As seen in my scoping above, I deliberately focused on getting some backend functionality working before adding the frontend layer.
+- (Approach) I ended up deviating a bit from the original plan. I just used an in-memory Python global list variable on the server for a while as my "database" while implementing frontend. Then I added the Redis DB to replace the Python global list.
+- (Approach) I focused first on fully implementing the core customer flow of saving a note, and then creating a summary from those notes. Then, I implemented the save/view summary feature last.
+- (Design Decision / Challenge) I knew I wanted to use a simple in-memory database for the sake of time. I was deciding between sqlite (relational) and redis (NoSQL). I opted for Redis because we are mainly storing unstructured data. If given more time, I would consider the pros/cons of using Vector Databases because those are tuned for use with AI Agents (but that could also come with extra overhead of using a framework like LangChain to smoothe the process of retrieving data from the Vector Database and sending it to the AI agent.)
+- (Challenge) Due to time constraints, I also opted to completely ignore user authentication or supporting multiple users. It is an undifferentiated engineering effort that is not core to the customer experience this app is trying to provide. I've also proven I can implement this in my personal projects (example project: https://apex-pies.com/), so I decided to not implement it here.
+- (Challenge) Due to time, there are no safety precautions on the API and I don't do all the error-checking and input validations I wouldn't normally done if given more time. I've documented some of these in the code and API documentation.
+
+# Assumptions
+
+- The user will put in the session info in the notes (patient name, therapist name, date, time, etc.)
+- Scaling this core feature to many users and for many different sessions will be handled outside of the scope of this project. This tool shows how the summarization would work for a single session's worth of notes.
+- Authenticating users will be handled outside of the scope of this project.
+
 
 ## Setup Instructions
 
