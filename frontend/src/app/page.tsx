@@ -2,6 +2,7 @@
 "use client"; // I don't know NextJS at all, so just going to use vanilla ReactJS with typing.
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 function Home() {
   const [noteInputText, setNoteInputText] = useState<string>('')
@@ -176,9 +177,13 @@ function Home() {
             )
             }
           </div>
-
-          
         )}
+
+        <Link href="/summaries">
+          <button className="rounded-md bg-yellow-50 text-black p-1">
+            View Summaries
+          </button>
+        </Link>
       </div>
     </div>
   );

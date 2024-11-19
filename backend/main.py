@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
@@ -76,6 +76,36 @@ async def saveSummary(summary: Summary):
     print("redis Summaries:", redisSummaries)
 
     return {"message": "Note saved successfully!"}
+
+'''
+Gets Number of Summaries for this user
+'''
+@app.get("/numSummaries")
+async def numSummaries():
+    # prepare to fetch from Redis db
+    userKey = f'user:{TEST_USER_ID}'
+    userSummariesKey = userKey + ":summaries"
+
+    # print list of summaries in Redis db right now
+    redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
+    redisSummaries = [note.decode('utf-8') for note in redisSummaries]
+
+    return {"num_summaries": len(redisSummaries)}
+
+'''
+Gets a particular saved Summary for the user
+'''
+@app.get("/savedSummary")
+async def getSavedSummary(summary_num: int = Query(default=1)):
+    # prepare to fetch from Redis db
+    userKey = f'user:{TEST_USER_ID}'
+    userSummariesKey = userKey + ":summaries"
+
+    # print list of summaries in Redis db right now
+    redisSummaries = r.lrange(userSummariesKey, 0, -1)  # Get all notes from the list
+    redisSummaries = [note.decode('utf-8') for note in redisSummaries]
+
+    return {"summary": redisSummaries[summary_num-1]}
 
 '''
 Gets all notes for the user from Redis DB, and then synthesizes a summary using
