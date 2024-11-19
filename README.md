@@ -46,6 +46,9 @@ pip install -r requirements.txt
 
 # Start the server
 fastapi dev main.py
+
+# worked better for me (Adithya Solai)
+uvicorn main:app --reload
 ```
 
 ### Frontend Setup (Node.js 18+ required)
@@ -80,4 +83,5 @@ The application will be available at:
 - Frontend runs on port 3000 with hot reload enabled
 - Backend runs on port 8000 with auto-reload enabled
 - API documentation available at http://localhost:8000/docs
+- Update backend dependencies: `pipreqs --force`
 
